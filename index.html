@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Code Generator</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(135deg,#0f172a,#1e3a8a,#2563eb);
+}
+
+.container{
+    text-align:center;
+}
+
+.card{
+    width:800px;
+    padding:30px;
+    border-radius:25px;
+    background:rgba(255,255,255,.12);
+    backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,.2);
+    box-shadow:0 20px 45px rgba(0,0,0,.45);
+}
+
+.title{
+    color:white;
+    font-size:38px;
+    margin-bottom:25px;
+    letter-spacing:2px;
+}
+
+.code-box{
+    position:relative;
+    background:#0d1117;
+    border:2px solid #00d9ff;
+    border-radius:18px;
+    padding:25px;
+    padding-bottom:70px;
+    min-height:340px;
+    text-align:left;
+    overflow:auto;
+    box-shadow:0 0 30px rgba(0,217,255,.35);
+}
+
+
+
+pre{
+    color:#7CFC98;
+    font-size:17px;
+    line-height:1.8;
+    font-family:Consolas,monospace;
+    white-space:pre-wrap;
+    overflow-wrap:anywhere;
+    word-break:break-word;
+}
+
+.author{
+    position:absolute;
+    bottom:18px;
+    right:20px;
+    background:linear-gradient(45deg,#00d9ff,#7c3aed);
+    color:white;
+    padding:8px 18px;
+    border-radius:25px;
+    font-size:14px;
+    font-weight:bold;
+}
+
+.buttons{
+    margin-top:30px;
+    display:flex;
+    justify-content:center;
+    gap:20px;
+}
+
+button{
+    padding:14px 38px;
+    font-size:17px;
+    border:none;
+    border-radius:50px;
+    cursor:pointer;
+    transition:.3s;
+    font-weight:bold;
+}
+
+.prev{
+    background:#ffffff;
+    color:#111827;
+}
+
+.next{
+    background:linear-gradient(45deg,#00d9ff,#7c3aed);
+    color:white;
+}
+
+button:hover{
+    transform:translateY(-4px) scale(1.05);
+    box-shadow:0 10px 25px rgba(0,0,0,.35);
+}
+
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<div class="card">
+
+<h1 class="title">💻 Quote Generator</h1>
+
+<div class="code-box">
+
+<pre id="quote-text">
+#include iostream;
+using namespace std;
+
+int main()
+{
+    cout << "Hello World";
+
+    return 0;
+}
+</pre>
+
+<div class="author" id="author">
+✍ Author : Bhupendra
+</div>
+
+</div>
+
+<div class="buttons">
+<button class="prev" id="prev">⬅ Previous</button>
+<button class="next" id="next">Next ➜</button>
+</div>
+
+</div>
+
+</div>
+
+<script>
+    let quoteText = document.getElementById("quote-text");
+    let author = document.getElementById("author");
+    let prevBtn = document.getElementById("prev");
+    let nextBtn = document.getElementById("next");
+
+    async function fetchCodeData() {
+        try {
+            let response = await fetch("https://dummyjson.com/quotes/random");
+            let data = await response.json();
+            quoteText.textContent = data.quote;
+            author.textContent = `✍ Author : ${data.author}`;
+        } catch (error) {
+            console.error("Error fetching code data:", error);
+        }
+    }
+
+    fetchCodeData();
+    nextBtn.addEventListener("click", fetchCodeData);
+    prevBtn.addEventListener("click", fetchCodeData);
+</script>
+
+</body>
+</html>
